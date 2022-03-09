@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -45,9 +46,9 @@ export class Products extends BaseEntity {
   @UpdateDateColumn({ select: false })
   updateddAt: string;
 
-  @OneToMany(() => ProductsCategories, (category) => category.products)
+  @ManyToOne(() => ProductsCategories, (category) => category.products)
   category: ProductsCategories;
 
-  @OneToMany(() => ProductsBrands, (category) => category.products)
+  @ManyToOne(() => ProductsBrands, (brand) => brand.products)
   brand: ProductsBrands;
 }

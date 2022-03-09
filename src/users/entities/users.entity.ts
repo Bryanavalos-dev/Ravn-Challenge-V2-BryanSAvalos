@@ -3,7 +3,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -37,6 +36,9 @@ export class Users extends BaseEntity {
   @Column({ default: true, type: 'boolean' })
   isActive: boolean;
 
+  @Column({ default: false, type: 'boolean' })
+  verified: boolean;
+
   @Column({ nullable: true, type: 'varchar' })
   phone: string;
 
@@ -50,7 +52,7 @@ export class Users extends BaseEntity {
   updatedAt: string;
 
   @OneToMany(() => UsersProfiles, (profile) => profile.users)
-  rol: UsersProfiles;
+  profile: UsersProfiles;
 
   @OneToMany(() => UsersAddresses, (userAddresses) => userAddresses.user)
   userAddresses: UsersAddresses;

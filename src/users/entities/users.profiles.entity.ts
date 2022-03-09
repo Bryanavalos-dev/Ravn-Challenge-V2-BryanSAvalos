@@ -3,7 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Users } from './users.entity';
@@ -22,6 +22,6 @@ export class UsersProfiles extends BaseEntity {
   @CreateDateColumn({ select: false })
   createdAt: string;
 
-  @OneToMany(() => Users, (user) => user.rol)
+  @ManyToOne(() => Users, (user) => user.profile)
   users: Users[];
 }
