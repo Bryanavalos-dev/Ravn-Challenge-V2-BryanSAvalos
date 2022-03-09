@@ -37,7 +37,7 @@ export class Products extends BaseEntity {
   price: number;
 
   @Column({ type: 'boolean', nullable: false })
-  available: boolean;
+  isActiveProduct: boolean;
 
   @CreateDateColumn({ select: false })
   createdAt: string;
