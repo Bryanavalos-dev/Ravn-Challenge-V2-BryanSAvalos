@@ -5,9 +5,18 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { UsersModule } from './users/users.module';
 import { SystemModule } from './system/system.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import ormconfig from 'ormconfig';
 
 @Module({
-  imports: [AuthModule, ProductsModule, OrdersModule, UsersModule, SystemModule],
+  imports: [
+    TypeOrmModule.forRoot(ormconfig),
+    AuthModule,
+    ProductsModule,
+    OrdersModule,
+    UsersModule,
+    SystemModule,
+  ],
   controllers: [],
   providers: [],
 })
