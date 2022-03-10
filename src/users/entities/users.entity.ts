@@ -3,6 +3,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -51,7 +53,7 @@ export class Users extends BaseEntity {
   @UpdateDateColumn({ select: false })
   updatedAt: string;
 
-  @OneToMany(() => UsersProfiles, (profile) => profile.users)
+  @ManyToOne(() => UsersProfiles, (profile) => profile.users)
   profile: UsersProfiles;
 
   @OneToMany(() => UsersAddresses, (userAddresses) => userAddresses.user)
