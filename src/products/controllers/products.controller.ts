@@ -1,9 +1,12 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   Query,
   Res,
   UploadedFile,
@@ -22,6 +25,7 @@ import {
 import {
   ResponseListDTO,
   ResponseMinimalDTO,
+  ResponseSingleDTO,
 } from '../../_dtos/responseList.dto';
 import { ProductsCreateDTO } from '../dtos/products.create.dto';
 import { ProductsFiltersDTO } from '../dtos/products.filter.dto';
@@ -73,6 +77,10 @@ export class ProductsController {
     @Param('id') productId: string,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<ResponseMinimalDTO> {
+    if (!file) {
+      throw new BadRequestException('The file must been required.');
+    }
+
     return this.productService.uploadImage(productId, file.filename);
   }
 
@@ -83,5 +91,28 @@ export class ProductsController {
   ): Promise<any> {
     const imageName = await this.productService.getProductImage(productId);
     res.sendFile(imageName, { root: `./public` });
+  }
+
+  @Get('/:id')
+  async getProductByID(
+    @Param('id') productId: string,
+  ): Promise<ResponseSingleDTO<Products>> {
+    return this.productService.getProductById(productId);
+  }
+
+  @Put('/:id')
+  @UseGuards(AuthGuard(), CheckForPermissionGuard)
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async updateProduct(
+    @Param('id') id: string,
+    @Body() data: ProductsCreateDTO,
+  ): Promise<ResponseMinimalDTO> {
+    return this.productService.updateProduct(id, data);
+  }
+
+  @Delete('/:id')
+  @UseGuards(AuthGuard(), CheckForPermissionGuard)
+  async deleteProduct(@Param('id') id: string): Promise<ResponseMinimalDTO> {
+    return this.productService.deleteProduct(id);
   }
 }

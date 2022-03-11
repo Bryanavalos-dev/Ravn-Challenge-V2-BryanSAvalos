@@ -10,7 +10,6 @@ export const fileFilter = (req, file, callback) => {
 };
 
 export const fileName = (req, file, callback) => {
-  console.log(file);
   const randomName = generateUniqueId();
   callback(null, `${randomName}.jpg`);
 };

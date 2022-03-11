@@ -1,5 +1,5 @@
 import { logDatabaseError } from '../../_tools';
-import { EntityRepository, Repository } from 'typeorm';
+import { DeleteResult, EntityRepository, Repository } from 'typeorm';
 import { ProductsFiltersDTO } from '../dtos/products.filter.dto';
 import { Products } from '../entities/products.entity';
 import { paginateRaw } from 'nestjs-typeorm-paginate';
@@ -119,6 +119,15 @@ export class ProductsRepository extends Repository<Products> {
       return this.update(id, data);
     } catch (error) {
       logger.error(error);
+    }
+  }
+
+  async deleteProduct(id: string): Promise<DeleteResult> {
+    try {
+      return this.delete(id);
+    } catch (error) {
+      logger.error(error);
+      logDatabaseError('product', error);
     }
   }
 }

@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Transform } from 'class-transformer';
 import {
   IsBooleanString,
