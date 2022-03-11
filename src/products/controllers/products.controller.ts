@@ -48,6 +48,6 @@ export class ProductsController {
   async createProducts(
     @Body() data: ProductsCreateDTO,
   ): Promise<ResponseMinimalDTO> {
-    return { message: 'ola' };
+    return this.productService.createProduct(data);
   }
 }

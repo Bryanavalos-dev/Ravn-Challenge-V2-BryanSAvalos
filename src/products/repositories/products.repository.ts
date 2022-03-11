@@ -4,6 +4,7 @@ import { ProductsFiltersDTO } from '../dtos/products.filter.dto';
 import { Products } from '../entities/products.entity';
 import { paginateRaw } from 'nestjs-typeorm-paginate';
 import { Logger } from '@nestjs/common';
+import { ProductsBaseDTO } from '../dtos/products.base.dto';
 
 const logger = new Logger('Products');
 
@@ -63,6 +64,25 @@ export class ProductsRepository extends Repository<Products> {
     } catch (error) {
       logger.error(error);
       logDatabaseError('products', error);
+    }
+  }
+
+  async createProduct(data: ProductsBaseDTO): Promise<Products> {
+    let response: Products;
+    try {
+      const createdProduct = this.create({ ...data });
+      response = await this.save(createdProduct);
+    } catch (error) {
+      logger.error(error);
+    }
+    return response;
+  }
+
+  async getProductsByUnique(unique: string): Promise<Products[]> {
+    try {
+      return this.find({ where: { unique } });
+    } catch (error) {
+      logger.error(error);
     }
   }
 }
