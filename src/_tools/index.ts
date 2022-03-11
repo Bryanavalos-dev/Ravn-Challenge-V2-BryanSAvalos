@@ -18,19 +18,19 @@ export function logDatabaseError(type: string, error: any): void {
 
           break;
         case '22P02':
-          message = `El formato de id para el ${type} seleccionado es incorrecto.`;
+          message = `The format id for the selected ${type} is incorrect.`;
           break;
         default:
-          message = 'Error no identificada en la base de datos.';
+          message = 'Unidentify database error.';
           break;
       }
       throw new BadRequestException(message);
     case 'EntityNotFound':
     case 'EntityNotFoundError':
-      throw new BadRequestException(`El ${type} seleccionado no existe.`);
+      throw new BadRequestException(`The selected ${type} doesn't exist.`);
 
     default:
-      throw new InternalServerErrorException('Error no identificado');
+      throw new InternalServerErrorException('Unidentify error.');
   }
 }
 

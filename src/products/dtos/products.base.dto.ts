@@ -9,6 +9,7 @@ export class ProductsBaseDTO {
   quantityAvailable?: number;
   initialQuantity: number;
   price: number;
+  imageName?: string;
   isAvailable: boolean;
   category: ProductsCategories;
   brand: ProductsBrands;

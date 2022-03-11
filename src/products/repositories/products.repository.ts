@@ -10,6 +10,29 @@ const logger = new Logger('Products');
 
 @EntityRepository(Products)
 export class ProductsRepository extends Repository<Products> {
+  async getProductById(id: string): Promise<Products> {
+    let product: Products;
+    try {
+      product = await this.findOneOrFail(
+        id,
+
+        {
+          join: {
+            alias: 'p',
+            leftJoinAndSelect: {
+              brand: 'p.brand',
+              category: 'p.category',
+            },
+          },
+        },
+      );
+    } catch (error) {
+      logger.error(error);
+      logDatabaseError('product', error);
+    }
+    return product;
+  }
+
   async getProductsList(
     filter: ProductsFiltersDTO,
   ): Promise<{ data: any; count }> {
@@ -80,7 +103,20 @@ export class ProductsRepository extends Repository<Products> {
 
   async getProductsByUnique(unique: string): Promise<Products[]> {
     try {
-      return this.find({ where: { unique } });
+      return this.find({
+        where: { unique },
+      });
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+
+  async updateProduct(
+    id: string,
+    data: Partial<ProductsBaseDTO>,
+  ): Promise<any> {
+    try {
+      return this.update(id, data);
     } catch (error) {
       logger.error(error);
     }

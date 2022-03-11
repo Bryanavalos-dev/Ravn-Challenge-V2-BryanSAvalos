@@ -40,6 +40,9 @@ export class Products extends BaseEntity {
   @Column({ type: 'boolean', nullable: false })
   isAvailable: boolean;
 
+  @Column({ type: 'varchar', nullable: true })
+  imageName: string;
+
   @CreateDateColumn({ select: false })
   createdAt: string;
 

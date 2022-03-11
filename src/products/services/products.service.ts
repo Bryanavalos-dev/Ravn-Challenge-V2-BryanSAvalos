@@ -58,4 +58,26 @@ export class ProductsService {
       message: 'The product was been create successfully.',
     };
   }
+
+  async uploadImage(
+    id: string,
+    imageName: string,
+  ): Promise<ResponseMinimalDTO> {
+    const product = await this.productRepository.getProductById(id);
+
+    await this.productRepository.updateProduct(id, {
+      ...product,
+      imageName,
+    });
+
+    return {
+      message: 'The image was been save successfully.',
+    };
+  }
+
+  async getProductImage(id: string): Promise<string> {
+    const { imageName } = await this.productRepository.getProductById(id);
+
+    return imageName;
+  }
 }
