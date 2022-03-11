@@ -2,7 +2,9 @@ import { logDatabaseError } from '../../_tools';
 import { EntityRepository, Repository } from 'typeorm';
 import { SystemCities } from '../entities/system.cities.entity';
 import { SystemFilterDTO } from '../dtos/system-filter.dto';
+import { Logger } from '@nestjs/common';
 
+const logger = new Logger('SystemCities');
 @EntityRepository(SystemCities)
 export class SystemCitiesRepository extends Repository<SystemCities> {
   async getCities(
@@ -26,7 +28,7 @@ export class SystemCitiesRepository extends Repository<SystemCities> {
         where: { ...filters },
       });
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       logDatabaseError('cities', error);
     }
     return { data: cities, count: cities.length };

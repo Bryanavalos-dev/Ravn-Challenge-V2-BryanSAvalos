@@ -2,7 +2,9 @@ import { logDatabaseError } from '../../_tools';
 import { EntityRepository, Repository } from 'typeorm';
 import { SystemStates } from '../entities/system.states.entity';
 import { SystemFilterDTO } from '../dtos/system-filter.dto';
+import { Logger } from '@nestjs/common';
 
+const logger = new Logger('SystemStates');
 @EntityRepository(SystemStates)
 export class SystemStatesRepository extends Repository<SystemStates> {
   async getStates(
@@ -26,7 +28,7 @@ export class SystemStatesRepository extends Repository<SystemStates> {
         where: { ...filters },
       });
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       logDatabaseError('state', error);
     }
     return { data: state, count: state.length };

@@ -11,7 +11,7 @@ export class UsersRepository extends Repository<Users> {
       const user = await this.createQueryBuilder('u')
         .where({ id })
         .leftJoinAndSelect('u.profile', 'p')
-        .orderBy('c.name', 'ASC')
+        .orderBy('u.names', 'ASC')
         .getOne();
       return user;
     } catch (error) {

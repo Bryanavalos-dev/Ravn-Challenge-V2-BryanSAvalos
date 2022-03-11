@@ -19,7 +19,6 @@ export class ProductsService {
     const { data, count } = await this.productRepository.getProductsList(
       filter,
     );
-    console.log(data.items);
 
     return {
       data,
