@@ -27,13 +27,29 @@ export class ProductsService {
 
   async getProducts(
     filter: ProductsFiltersDTO,
+    user?: Users,
   ): Promise<ResponseListDTO<Partial<Products>, number, number, number>> {
     const { data, count } = await this.productRepository.getProductsList(
       filter,
     );
 
+    const likedProducts = await this.productsLikeRepository.getLikes();
+    console.log(likedProducts);
+    console.log(user);
+
+    const productsList = data.map((p) => {
+      return {
+        ...p,
+        liked: user
+          ? likedProducts.find(
+              (l) => p.id === l.product.id && user.id === l.user.id,
+            ).liked ?? false
+          : false,
+      };
+    });
+
     return {
-      data,
+      data: productsList,
       count,
       limit: filter.limit,
       page: filter.page,

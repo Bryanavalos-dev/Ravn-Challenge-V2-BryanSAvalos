@@ -35,6 +35,7 @@ import { diskStorage } from 'multer';
 import { fileFilter, fileName } from '../helpers/images.helpers';
 import { GetUserData } from '../../auth/auth.getUserData.decorator';
 import { Users } from '../../users/entities/users.entity';
+import { GetAuthData } from 'src/auth/auth.getData.decorator';
 
 @Controller('/products')
 export class ProductsController {
@@ -45,9 +46,9 @@ export class ProductsController {
   @UsePipes(new ValidationPipe({ transform: true }))
   async getProducts(
     @Query() filter: ProductsFiltersDTO,
-    @GetUserData() user: Users | false,
+    @GetAuthData({ data: 'user', logged: false }) user?: Users,
   ): Promise<ResponseListDTO<Partial<Products>, number, number, number>> {
-    const { data, count } = await this.productService.getProducts(filter);
+    const { data, count } = await this.productService.getProducts(filter, user);
     return new ResponseListDTO(
       plainToInstance(Products, data),
       count,

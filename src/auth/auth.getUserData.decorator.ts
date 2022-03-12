@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Users } from 'src/users/entities/users.entity';
-import { UsersProfilesRepository } from 'src/users/repositories/users.profiles.repository';
-import { UsersRepository } from 'src/users/repositories/users.repository';
+import { Users } from '../users/entities/users.entity';
+import { UsersProfilesRepository } from '../users/repositories/users.profiles.repository';
+import { UsersRepository } from '../users/repositories/users.repository';
 import { JwtStrategy } from './jwt.strategy';
 
 export const GetUserData = createParamDecorator(

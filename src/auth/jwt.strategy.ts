@@ -59,6 +59,3 @@ export class JwtStrategyDependent {
     strategy;
   }
 }
-export function validate(arg0: { uid: any; pid: any }, arg1: boolean) {
-  throw new Error('Function not implemented.');
-}
