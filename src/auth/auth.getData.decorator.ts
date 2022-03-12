@@ -1,4 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import * as jwt from 'jsonwebtoken';
+import { UsersProfilesRepository } from 'src/users/repositories/users.profiles.repository';
+import { UsersRepository } from 'src/users/repositories/users.repository';
+import { Users } from '../users/entities/users.entity';
+import { JwtStrategy } from './jwt.strategy';
 
 export const GetAuthData = createParamDecorator(
   (data, ctx: ExecutionContext): any => {

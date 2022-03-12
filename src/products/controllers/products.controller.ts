@@ -21,7 +21,7 @@ import { plainToInstance } from 'class-transformer';
 import {
   CheckForCouplesGuard,
   CheckForPermissionGuard,
-} from 'src/auth/auth.guards.decorator';
+} from '../../auth/auth.guards.decorator';
 import {
   ResponseListDTO,
   ResponseMinimalDTO,
@@ -33,6 +33,8 @@ import { Products } from '../entities/products.entity';
 import { ProductsService } from '../services/products.service';
 import { diskStorage } from 'multer';
 import { fileFilter, fileName } from '../helpers/images.helpers';
+import { GetUserData } from '../../auth/auth.getUserData.decorator';
+import { Users } from '../../users/entities/users.entity';
 
 @Controller('/products')
 export class ProductsController {
@@ -41,8 +43,9 @@ export class ProductsController {
   @Get()
   @UseGuards(CheckForCouplesGuard)
   @UsePipes(new ValidationPipe({ transform: true }))
-  async getInvoices(
+  async getProducts(
     @Query() filter: ProductsFiltersDTO,
+    @GetUserData() user: Users | false,
   ): Promise<ResponseListDTO<Partial<Products>, number, number, number>> {
     const { data, count } = await this.productService.getProducts(filter);
     return new ResponseListDTO(

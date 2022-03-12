@@ -1,3 +1,4 @@
+import { ProductsLiked } from '../../products/entities/products.likes.entity';
 import {
   BaseEntity,
   Column,
@@ -58,4 +59,7 @@ export class Users extends BaseEntity {
 
   @OneToMany(() => UsersAddresses, (userAddresses) => userAddresses.user)
   userAddresses: UsersAddresses;
+
+  @OneToMany(() => ProductsLiked, (like) => like.user)
+  like: ProductsLiked;
 }

@@ -1,4 +1,9 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import {
+  Dependencies,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Strategy, ExtractJwt } from 'passport-jwt';
@@ -25,7 +30,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayloadDTO): Promise<{
+  async validate(
+    payload: JwtPayloadDTO,
+    logged = true,
+  ): Promise<{
     user: Users;
     profile: UsersProfiles;
   }> {
@@ -34,6 +42,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user = await this.userRepository.getUserById(uid);
 
     const profile = await this.profileRepository.getProfileById(pid);
+
     if (!user) {
       logger.error('The user must be loggedin');
       throw new UnauthorizedException(
@@ -42,4 +51,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
     return { user, profile };
   }
+}
+
+@Dependencies(JwtStrategy)
+export class JwtStrategyDependent {
+  constructor(strategy) {
+    strategy;
+  }
+}
+export function validate(arg0: { uid: any; pid: any }, arg1: boolean) {
+  throw new Error('Function not implemented.');
 }

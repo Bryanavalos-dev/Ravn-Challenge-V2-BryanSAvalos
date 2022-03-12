@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { ProductsBrands } from './products.brand.entity';
 import { ProductsCategories } from './products.categories.entity';
+import { ProductsLiked } from './products.likes.entity';
 
 @Entity()
 export class Products extends BaseEntity {
@@ -54,4 +55,7 @@ export class Products extends BaseEntity {
 
   @ManyToOne(() => ProductsBrands, (brand) => brand.products)
   brand: ProductsBrands;
+
+  @OneToMany(() => ProductsLiked, (like) => like.product)
+  like: ProductsLiked[];
 }

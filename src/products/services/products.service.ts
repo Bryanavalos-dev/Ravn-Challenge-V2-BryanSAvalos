@@ -12,12 +12,17 @@ import { ProductsRepository } from '../repositories/products.repository';
 import * as generateUniqueId from 'generate-unique-id';
 import { ProductsBrands } from '../entities/products.brand.entity';
 import { plainToInstance } from 'class-transformer';
+import { ProductsLikedRepository } from '../repositories/products.like.repository';
+import { Users } from '../../users/entities/users.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(ProductsRepository)
     private productRepository: ProductsRepository,
+
+    @InjectRepository(ProductsLikedRepository)
+    private productsLikeRepository: ProductsLikedRepository,
   ) {}
 
   async getProducts(
