@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  clothes_db:
+    image: postgres:12.3
+    ports:
+      - '3001:5432'
+    env_file:
+      - prod.env
+    volumes:
+      - clothes_database:/var/lib/postgresql/data
+
+  clothes_api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    env_file:
+      - prod.env
+    depends_on:
+      - clothes_db
+
+volumes:
+  clothes_database: {}
