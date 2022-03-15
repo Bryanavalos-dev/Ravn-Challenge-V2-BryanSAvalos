@@ -34,8 +34,6 @@ export class ProductsService {
     );
 
     const likedProducts = await this.productsLikeRepository.getLikes();
-    console.log(likedProducts);
-    console.log(user);
 
     const productsList = data.map((p) => {
       return {

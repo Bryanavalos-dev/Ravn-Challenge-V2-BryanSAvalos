@@ -46,9 +46,8 @@ export class ProductsController {
   @UsePipes(new ValidationPipe({ transform: true }))
   async getProducts(
     @Query() filter: ProductsFiltersDTO,
-    @GetAuthData({ data: 'user', logged: false }) user?: Users,
   ): Promise<ResponseListDTO<Partial<Products>, number, number, number>> {
-    const { data, count } = await this.productService.getProducts(filter, user);
+    const { data, count } = await this.productService.getProducts(filter);
     return new ResponseListDTO(
       plainToInstance(Products, data),
       count,
