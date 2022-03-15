@@ -29,7 +29,6 @@
 ## Documentation
  <a href="https://documenter.getpostman.com/view/13963177/UVsLSRuq" target="_blank">Postman API Documentation</a>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
